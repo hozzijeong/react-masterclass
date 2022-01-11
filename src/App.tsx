@@ -1,10 +1,9 @@
-import { Wrapper, Box, Emoji } from "./AppStyled";
+import { Wrapper, Box } from "./AppStyled";
 
 function App() {
     return (
         <Wrapper>
             <Box>
-                <Emoji>🍩</Emoji>
             </Box>
         </Wrapper>
     );
