@@ -1,39 +1,17 @@
-import {useForm} from 'react-hook-form'
-import {atom, useRecoilState} from 'recoil'
-/**
- * useForm을 통해 Validation 구현하기.
- * 
- */
-interface ToDoProps{
-    id:number,
-    text:string,
-    category: "TO_DO" | "DOING" | "DONE"
-}
-interface FormProps{
-    toDo:string
-}
+import { useRecoilState} from 'recoil'
+import { toDosAtom } from '../atom';
+import CreateToDo from './CreateToDo';
+import ToDo from './ToDo';
 
-const toDosAtom = atom<ToDoProps[]>({
-    key:'toDo',
-    default:[]
-})
 
 function ToDoList(){
-    const {register,handleSubmit,setValue,} = useForm<FormProps>();
-    const [toDos,setToDos] = useRecoilState(toDosAtom)
-    const onSubmit = ({toDo}:FormProps) =>{
-        setToDos(cur => [{id:Date.now(),category:'TO_DO',text:toDo},...cur])
-        setValue('toDo',"")
-    }
+    const [toDos,_] = useRecoilState(toDosAtom)
     return(
         <div>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <input {...register('toDo', {required:"write To Do!!"})} placeholder='write To Do SMT'/>
-                <button>Add</button>
-            </form>
+            <CreateToDo/>
             <br/>
             <ul>
-                {toDos.map(toDo => <li key={toDo.id}>{toDo.text}</li>)}
+                {toDos.map(toDo => <ToDo {...toDo} />)}
             </ul>
         </div>
 
