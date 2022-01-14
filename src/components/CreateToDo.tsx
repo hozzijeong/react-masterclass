@@ -1,18 +1,18 @@
 import { useForm } from "react-hook-form";
-import { useSetRecoilState } from "recoil";
-import { toDosAtom } from "../atom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { Categories, category, toDosAtom } from "../atom";
 
 interface FormProps{
     toDo:string
 }
 
 
-
 function CreateToDo(){
     const {register,handleSubmit,setValue,} = useForm<FormProps>();
     const setToDos = useSetRecoilState(toDosAtom)
+    const curCategory = useRecoilValue(category)
     const onSubmit = ({toDo}:FormProps) =>{
-        setToDos(cur => [{id:Date.now(),category:'TO_DO',text:toDo},...cur])
+        setToDos(cur => [{id:Date.now(),category:curCategory,text:toDo},...cur])
         setValue('toDo',"")
     }
     return  (<form onSubmit={handleSubmit(onSubmit)}>

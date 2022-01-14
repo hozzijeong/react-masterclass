@@ -1,6 +1,6 @@
 import React from "react"
 import {  useSetRecoilState} from "recoil"
-import { ToDoProps, toDosAtom } from "../atom"
+import { Categories, ToDoProps, toDosAtom } from "../atom"
 
 
 function ToDo({text,category,id}:ToDoProps){
@@ -10,7 +10,7 @@ function ToDo({text,category,id}:ToDoProps){
         const {currentTarget:{name}} = event
         setToDos((curToDo) => {
             const curTargetIndex = curToDo.findIndex(toDo => toDo.id === id)
-            const newToDo = {text,id,category:name as any}
+            const newToDo = {text,id,category:Number(name) as any}
             return [
                 ...curToDo.slice(0,curTargetIndex),
                 newToDo,
@@ -21,9 +21,9 @@ function ToDo({text,category,id}:ToDoProps){
 
     return (<li>
         <span>{text}</span>
-        {category !== 'TO_DO' && <button name='TO_DO' onClick = {onClick}>TODO</button>}    
-        {category !== 'DOING' && <button name='DOING' onClick = {onClick}>Doing</button>}    
-        {category !== 'DONE' && <button name='DONE' onClick = {onClick}>Done</button>}    
+        {category !== Categories.TO_DO && <button name={Categories.TO_DO+''} onClick = {onClick}>ToDo</button>}    
+        {category !== Categories.DOING && <button name={Categories.DOING+''} onClick = {onClick}>Doing</button>}    
+        {category !== Categories.DONE && <button name={Categories.DONE+''} onClick = {onClick}>Done</button>}    
     </li>)
 }
 
