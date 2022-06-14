@@ -1,9 +1,11 @@
 import React from "react";
-import { useSetRecoilState } from "recoil";
-import { Categories, ToDoProps, toDosAtom } from "../atom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { Category, ToDoProps, toDosAtom, categoryAtom } from "../atom";
 
+// Categories
 function ToDo({ text, category, id }: ToDoProps) {
     const setToDos = useSetRecoilState(toDosAtom);
+    const categoryItems = useRecoilValue(categoryAtom);
     const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         const {
             currentTarget: { name },
@@ -22,24 +24,39 @@ function ToDo({ text, category, id }: ToDoProps) {
         });
     };
 
+    const getButton = () => {
+        const arr = [];
+        for (const [key, value] of Object.entries(categoryItems)) {
+            arr.push(
+                category !== value && (
+                    <button name={value + ""} onClick={onClick}>
+                        {key}
+                    </button>
+                ),
+            );
+        }
+        return arr;
+    };
+
     return (
         <li>
             <span>{text}</span>
-            {category !== Categories.TO_DO && (
-                <button name={Categories.TO_DO + ""} onClick={onClick}>
+            {getButton()}
+            {/* {category !== Category.TO_DO && (
+                <button name={Category.TO_DO + ""} onClick={onClick}>
                     ToDo
                 </button>
             )}
-            {category !== Categories.DOING && (
-                <button name={Categories.DOING + ""} onClick={onClick}>
+            {category !== Category.DOING && (
+                <button name={Category.DOING + ""} onClick={onClick}>
                     Doing
                 </button>
             )}
-            {category !== Categories.DONE && (
-                <button name={Categories.DONE + ""} onClick={onClick}>
+            {category !== Category.DONE && (
+                <button name={Category.DONE + ""} onClick={onClick}>
                     Done
                 </button>
-            )}
+            )} */}
         </li>
     );
 }

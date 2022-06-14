@@ -5,16 +5,31 @@ import { atom, selector } from "recoil";
  * enum을 사용해서 (상수처럼) 혹시 모를 실수를 방지하기.
  */
 
-export enum Categories {
-    "TO_DO",
-    "DOING",
-    "DONE",
+// export enum Categories {
+//     "TO_DO",
+//     "DOING",
+//     "DONE",
+// }
+
+export interface ICategory {
+    [key: string]: number;
 }
+
+export const Category: ICategory = {
+    TO_DO: 0,
+    DOING: 1,
+    DONE: 2,
+};
+
+export const categoryAtom = atom<ICategory>({
+    key: "categoryAtom",
+    default: Category,
+});
 
 export interface ToDoProps {
     id: number;
     text: string;
-    category: Categories;
+    category: Number;
 }
 
 export const toDosAtom = atom<ToDoProps[]>({
@@ -24,9 +39,9 @@ export const toDosAtom = atom<ToDoProps[]>({
         : [],
 });
 
-export const category = atom<Categories>({
+export const category = atom<Number>({
     key: "category",
-    default: Categories.TO_DO,
+    default: 0, // 왜 Category 프로퍼티에 접근이 안되나?
 });
 
 export const exportToDo = selector({

@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { Categories, category, exportToDo, toDosAtom } from "../atom";
+import { category, exportToDo, toDosAtom, Category } from "../atom";
 import CreateToDo from "./CreateToDo";
 import ToDo from "./ToDo";
-
+// Categories
+// Allow users to create custom categories.
 function ToDoList() {
-    const [value, setValue] = useState(Categories.TO_DO);
+    const [value, setValue] = useState(Category.TO_DO);
     const toDos = useRecoilValue(exportToDo);
     const [curCategory, setCurCategory] = useRecoilState(category);
     const onInput = (event: React.FormEvent<HTMLSelectElement>) => {
@@ -15,13 +16,13 @@ function ToDoList() {
         setValue(Number(value));
         setCurCategory(Number(value));
     };
-
+    console.log(toDos);
     return (
         <div>
             <select value={value} onInput={onInput}>
-                <option value={Categories.TO_DO + ""}>TODO</option>
-                <option value={Categories.DOING + ""}>DOING</option>
-                <option value={Categories.DONE + ""}>DONE</option>
+                <option value={Category.TO_DO + ""}>TODO</option>
+                <option value={Category.DOING + ""}>DOING</option>
+                <option value={Category.DONE + ""}>DONE</option>
             </select>
             <CreateToDo />
             <br />
