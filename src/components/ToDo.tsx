@@ -1,6 +1,7 @@
 import React from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { Category, ToDoProps, toDosAtom, categoryAtom } from "../atom";
+import { setTodoStorage } from "../Storage/localStorage";
 
 // Categories
 function ToDo({ text, category, id }: ToDoProps) {
@@ -18,7 +19,7 @@ function ToDo({ text, category, id }: ToDoProps) {
                 newToDo,
                 ...curToDo.slice(curTargetIndex + 1),
             ];
-            localStorage.setItem("toDo", JSON.stringify(newArr));
+            setTodoStorage("toDo", JSON.stringify(newArr));
 
             return newArr;
         });

@@ -1,4 +1,5 @@
 import { atom, selector } from "recoil";
+import { getTodoStorage } from "./Storage/localStorage";
 
 /**
  * Selector를 사용해서 코드를 좀 더 이쁘게 만들어 보기
@@ -34,9 +35,7 @@ export interface ToDoProps {
 
 export const toDosAtom = atom<ToDoProps[]>({
     key: "toDo",
-    default: localStorage.getItem("toDo")
-        ? JSON.parse(localStorage.getItem("toDo") as string)
-        : [],
+    default: getTodoStorage("toDo") ? JSON.parse(getTodoStorage("toDo")) : [],
 });
 
 export const category = atom<Number>({
