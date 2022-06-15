@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { category, toDosAtom } from "../atom";
-import { setTodoStorage } from "../Storage/localStorage";
+import { setLocalStorage } from "../Storage/localStorage";
 
 interface FormProps {
     toDo: string;
@@ -15,7 +15,7 @@ function CreateToDo() {
         const data = { id: Date.now(), category: curCategory, text: toDo };
         setToDos((cur) => [data, ...cur]);
         setValue("toDo", "");
-        setTodoStorage("toDo", JSON.stringify([data, ...toDos]));
+        setLocalStorage("toDo", JSON.stringify([data, ...toDos]));
     };
     return (
         <form onSubmit={handleSubmit(onSubmit)}>

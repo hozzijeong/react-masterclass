@@ -1,5 +1,5 @@
 import { atom, selector } from "recoil";
-import { getTodoStorage } from "./Storage/localStorage";
+import { getLocalStorage } from "./Storage/localStorage";
 
 /**
  * Selector를 사용해서 코드를 좀 더 이쁘게 만들어 보기
@@ -24,7 +24,9 @@ export const Category: ICategory = {
 
 export const categoryAtom = atom<ICategory>({
     key: "categoryAtom",
-    default: Category,
+    default: getLocalStorage("category")
+        ? JSON.parse(getLocalStorage("category"))
+        : Category,
 });
 
 export interface ToDoProps {
@@ -35,7 +37,7 @@ export interface ToDoProps {
 
 export const toDosAtom = atom<ToDoProps[]>({
     key: "toDo",
-    default: getTodoStorage("toDo") ? JSON.parse(getTodoStorage("toDo")) : [],
+    default: getLocalStorage("toDo") ? JSON.parse(getLocalStorage("toDo")) : [],
 });
 
 export const category = atom<Number>({
